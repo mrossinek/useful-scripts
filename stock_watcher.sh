@@ -11,8 +11,8 @@
 #   library.txt: holds one Yahoo Finance symbol and a name per line
 #   prices.txt:  will hold the latest stock prices
 
-padlength=42  # equals length of info line at end of script
-pad=$(printf '%0.1s' "_"{1..42})
+padlength=$(echo "Last updated `date`" | wc -c)
+pad=$(printf '%0.s_' `seq 1 ${padlength}`)
 
 apikey="./apikey.txt"
 apikey=$(cat $apikey)
@@ -26,7 +26,7 @@ touch $tmp_copy
 while read stock; do
         IFS=" " read sym name <<< $stock
         price=$(curl -s 'https://www.alphavantage.co/query?apikey='${apikey}'&function=TIME_SERIES_DAILY&symbol='${sym} | jq -r '[."Time Series (Daily)"[]][0]."4. close"')
-        printf '%s%*.*s%s\n' "${name}" 0 $(( padlength - ${#name} - ${#price} )) "${pad}" "${price}" >> $tmp_copy
+        printf '%s%*.*s%s\n' "${name}" 0 $(( ${padlength} - ${#name} - ${#price} - 1 )) "${pad}" "${price}" >> $tmp_copy
         sleep 20  # do not exceed limit of 5 api calls per minute
 done <$library
 
