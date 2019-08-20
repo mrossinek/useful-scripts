@@ -11,7 +11,7 @@
 # Usage: run ./small_backup.sh
 
 rsync --log-file=/home/${USER}/.log_small_backup.txt --progress -av --modify-window=1 ~/Files /mnt/stick
-notify-send -u low 'Backup' 'Please make a choice...'
+notify-send -i media-flash -u low 'Backup' 'Please make a choice...'
 read -p "Perform deletion step? (y/n)" choice
 case "$choice" in
     y|Y ) echo "Starting..."; rsync --log-file=/home/${USER}/.log_del_small_backup.txt --progress -av --modify-window=1 --delete ~/Files /mnt/stick;;

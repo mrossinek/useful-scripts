@@ -12,7 +12,7 @@
 # Usage: run ./large_backup.sh
 
 rsync --log-file=/home/${USER}/.log_large_backup.txt --progress -av ~ /mnt/backup
-notify-send -u low 'Backup' 'Please make a choice...'
+notify-send -i media-flash -u low 'Backup' 'Please make a choice...'
 read -p "Perform deletion step? (y/n)" choice
 case "$choice" in
     y|Y ) echo "Starting..."; rsync --log-file=/home/${USER}/.log_del_large_backup.txt --progress -av --exclude=Backups --exclude=Music --exclude=Pictures --exclude=Videos --delete ~ /mnt/backup;;
