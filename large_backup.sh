@@ -15,6 +15,6 @@ rsync --log-file=/home/${USER}/.log_large_backup.txt --progress -av ~ /mnt/backu
 notify-send -i media-flash -u low 'Backup' 'Please make a choice...'
 read -p "Perform deletion step? (y/n)" choice
 case "$choice" in
-    y|Y ) echo "Starting..."; rsync --log-file=/home/${USER}/.log_del_large_backup.txt --progress -av --exclude=Backups --exclude=Music --exclude=Pictures --exclude=Videos --delete ~ /mnt/backup;;
+    y|Y ) echo "Starting..."; rsync --log-file=/home/${USER}/.log_del_large_backup.txt --progress -av --exclude=Backups --exclude=Music --exclude=Pictures --exclude=Videos --existing --ignore-existing --delete ~ /mnt/backup;;
     n|N ) echo "Skipping deletion step!"; echo "Done.";;
 esac
