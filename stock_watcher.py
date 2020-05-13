@@ -9,7 +9,7 @@ Usage: run python stock_watcher.py
 Config:
     library.txt: holds one Yahoo Finance symbol per line
 """
-from datetime import date, timedelta
+from datetime import datetime, timedelta
 import os
 import pandas as pd
 import yfinance as yf
@@ -17,7 +17,7 @@ import yfinance as yf
 with open(os.path.expanduser("~/.stocks/library.txt"), "r") as LIBRARY:
     SYMBOLS = LIBRARY.read()
 
-TODAY = date.today()
+TODAY = datetime.today()
 YESTERDAY = TODAY - timedelta(days=1)
 TOMORROW = TODAY + timedelta(days=1)
 DATA = yf.download(SYMBOLS, start=f"{YESTERDAY:%F}", end=f"{TOMORROW:%F}")
@@ -31,4 +31,4 @@ RESULT.insert(2, "Percent", (CLOSE - PCLOSE) / CLOSE * 100.)
 
 with open(os.path.expanduser("~/.stocks/prices.txt"), "w") as PRICES:
     PRICES.write(RESULT.sort_values(by="Percent", ascending=False).to_string(header=False))
-    PRICES.write(f"\n{TODAY:%d %b %r}")
+    PRICES.write(f"\n{datetime.now():%d %b %r}")
