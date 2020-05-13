@@ -16,7 +16,7 @@ numberActive=$(xrandr | grep -E " connected (primary )?[0-9]+" | sed -e "s/\([a-
 if (($numberConnected > $numberActive)); then
     echo "Turning inactive screens on..."
     if xrandr | grep "HDMI-2 connected"; then
-        xrandr --output "HDMI-2" --auto --scale 1.33x1.33 --right-of "eDP-1" --auto
+        xrandr --output "HDMI-2" --auto --right-of "eDP-1" --auto
     elif xrandr | grep "eDP-1 connected"; then
         xrandr --output "eDP-1" --auto --right-of "eDP-1" --auto
     else
